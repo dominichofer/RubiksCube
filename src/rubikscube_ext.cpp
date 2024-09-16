@@ -61,7 +61,7 @@ public:
             " /   /|   /   /|\n"
             "{} - {} |  {} - {} |\n"
             "| {} | {}  | {} | {}\n"
-            "{} - {}/   {} - {}/ \n",
+            "{} - {}/   {} - {}/\n",
             c(2), c(3), o(2), o(3),
             c(0), c(1), o(0), o(1),
             c(6), c(7), o(6), o(7),
@@ -75,15 +75,15 @@ public:
 
     bool is_solved() const noexcept { return *this == Cube2x2(); }
 
-    void L1() noexcept
+    void L() noexcept
     {
         state = _mm_shuffle_pi8()
     }
-    void R1() noexcept;
-    void U1() noexcept;
-    void D1() noexcept;
-    void F1() noexcept;
-    void B1() noexcept;
+    void R() noexcept;
+    void U() noexcept;
+    void D() noexcept;
+    void F() noexcept;
+    void B() noexcept;
 
     void L2() noexcept;
     void R2() noexcept;
@@ -92,12 +92,12 @@ public:
     void F2() noexcept;
     void B2() noexcept;
 
-    void L3() noexcept;
-    void R3() noexcept;
-    void U3() noexcept;
-    void D3() noexcept;
-    void F3() noexcept;
-    void B3() noexcept;
+    void Li() noexcept;
+    void Ri() noexcept;
+    void Ui() noexcept;
+    void Di() noexcept;
+    void Fi() noexcept;
+    void Bi() noexcept;
 };
 
 NB_MODULE(rubikscube_ext, m)
@@ -109,22 +109,22 @@ NB_MODULE(rubikscube_ext, m)
         .def("__ne__", &Cube2x2::operator!=)
         .def("__str__", &Cube2x2::to_string)
         .def("is_solved", &Cube2x2::is_solved)
-        .def("L1", &Cube2x2::L1);
-        .def("R1", &Cube2x2::R1);
-        .def("U1", &Cube2x2::U1);
-        .def("D1", &Cube2x2::D1);
-        .def("F1", &Cube2x2::F1);
-        .def("B1", &Cube2x2::B1);
+        .def("L", &Cube2x2::L);
+        .def("R", &Cube2x2::R);
+        .def("U", &Cube2x2::U);
+        .def("D", &Cube2x2::D);
+        .def("F", &Cube2x2::F);
+        .def("B", &Cube2x2::B);
         .def("L2", &Cube2x2::L2);
         .def("R2", &Cube2x2::R2);
         .def("U2", &Cube2x2::U2);
         .def("D2", &Cube2x2::D2);
         .def("F2", &Cube2x2::F2);
         .def("B2", &Cube2x2::B2);
-        .def("L3", &Cube2x2::L3);
-        .def("R3", &Cube2x2::R3);
-        .def("U3", &Cube2x2::U3);
-        .def("D3", &Cube2x2::D3);
-        .def("F3", &Cube2x2::F3);
-        .def("B3", &Cube2x2::B3);
+        .def("Li", &Cube2x2::Li);
+        .def("Ri", &Cube2x2::Ri);
+        .def("Ui", &Cube2x2::Ui);
+        .def("Di", &Cube2x2::Di);
+        .def("Fi", &Cube2x2::Fi);
+        .def("Bi", &Cube2x2::Bi);
 }
