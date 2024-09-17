@@ -5,4 +5,6 @@ add_library(
     corners.cpp
     corners.h
     intrin.h
+    rotation.cpp
+    rotation.h
 )

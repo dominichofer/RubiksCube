@@ -1,19 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
-#include <vector>
-
-enum class Rotation
-{
-    L, L2, Li,
-    R, R2, Ri,
-    U, U2, Ui,
-    D, D2, Di,
-    F, F2, Fi,
-    B, B2, Bi
-};
-
-std::string to_string(Rotation);
+#include "rotation.h"
 
 class Corners
 {
@@ -24,6 +12,8 @@ class Corners
     // 4 - 5/
 
     uint64_t state;
+
+    Corners(uint64_t state) noexcept;
 
 public:
     Corners() noexcept;
@@ -36,13 +26,10 @@ public:
         uint8_t cubie_5, uint8_t orientation_5,
         uint8_t cubie_6, uint8_t orientation_6,
         uint8_t cubie_7, uint8_t orientation_7) noexcept;
-    explicit Corners(uint64_t state) noexcept;
 
     bool operator==(const Corners &) const;
     bool operator!=(const Corners &) const;
 
-    uint64_t get_state() const;
-    
     int cubie(int) const;
     int orientation(int) const;
 
@@ -79,12 +66,3 @@ public:
 };
 
 std::string to_string(Corners);
-
-namespace std
-{
-    template <>
-    struct hash<Corners>
-    {
-        size_t operator()(Corners) const;
-    };
-}

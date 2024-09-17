@@ -3,17 +3,6 @@
 #include <array>
 #include <sstream>
 
-std::string to_string(Rotation r)
-{
-    return std::vector<std::string>{
-        "L", "L2", "Li",
-        "R", "R2", "Ri",
-        "U", "U2", "Ui",
-        "D", "D2", "Di",
-        "F", "F2", "Fi",
-        "B", "B2", "Bi"}[static_cast<int>(r)];
-}
-
 Corners::Corners(uint64_t state) noexcept : state(state) {}
 
 Corners::Corners() noexcept : Corners(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0) {}
@@ -41,8 +30,6 @@ Corners::Corners(
 
 bool Corners::operator==(const Corners &o) const { return state == o.state; }
 bool Corners::operator!=(const Corners &o) const { return !(*this == o); }
-
-uint64_t Corners::get_state() const { return state; }
 
 int Corners::cubie(int index) const { return (state >> (index * 8)) & 0x07; }
 int Corners::orientation(int index) const { return (state >> (index * 8 + 4)) & 0x03; }
@@ -91,121 +78,103 @@ uint64_t ori_swap_1_and_2(uint64_t state, uint64_t mask)
 Corners Corners::L() const
 {
     auto s = byte_shuffle(state, 2, 1, 6, 3, 0, 5, 4, 7);
-    s = ori_swap_0_and_2(s, L_mask);
-    return Corners(s);
+    return ori_swap_0_and_2(s, L_mask);
 }
 
 Corners Corners::L2() const
 {
-    auto s = byte_shuffle(state, 6, 1, 4, 3, 2, 5, 0, 7);
-    return Corners(s);
+    return byte_shuffle(state, 6, 1, 4, 3, 2, 5, 0, 7);
 }
 
 Corners Corners::Li() const
 {
     auto s = byte_shuffle(state, 4, 1, 0, 3, 6, 5, 2, 7);
-    s = ori_swap_0_and_2(s, L_mask);
-    return Corners(s);
+    return ori_swap_0_and_2(s, L_mask);
 }
 
 Corners Corners::R() const
 {
     auto s = byte_shuffle(state, 0, 5, 2, 1, 4, 7, 6, 3);
-    s = ori_swap_0_and_2(s, R_mask);
-    return Corners(s);
+    return ori_swap_0_and_2(s, R_mask);
 }
 
 Corners Corners::R2() const
 {
-    auto s = byte_shuffle(state, 0, 7, 2, 5, 4, 3, 6, 1);
-    return Corners(s);
+    return byte_shuffle(state, 0, 7, 2, 5, 4, 3, 6, 1);
 }
 
 Corners Corners::Ri() const
 {
     auto s = byte_shuffle(state, 0, 3, 2, 7, 4, 1, 6, 5);
-    s = ori_swap_0_and_2(s, R_mask);
-    return Corners(s);
+    return ori_swap_0_and_2(s, R_mask);
 }
 
 Corners Corners::U() const
 {
     auto s = byte_shuffle(state, 1, 3, 0, 2, 4, 5, 6, 7);
-    s = ori_swap_1_and_2(s, U_mask);
-    return Corners(s);
+    return ori_swap_1_and_2(s, U_mask);
 }
 
 Corners Corners::U2() const
 {
-    auto s = byte_shuffle(state, 3, 2, 1, 0, 4, 5, 6, 7);
-    return Corners(s);
+    return byte_shuffle(state, 3, 2, 1, 0, 4, 5, 6, 7);
 }
 
 Corners Corners::Ui() const
 {
     auto s = byte_shuffle(state, 2, 0, 3, 1, 4, 5, 6, 7);
-    s = ori_swap_1_and_2(s, U_mask);
-    return Corners(s);
+    return ori_swap_1_and_2(s, U_mask);
 }
 
 Corners Corners::D() const
 {
     auto s = byte_shuffle(state, 0, 1, 2, 3, 6, 4, 7, 5);
-    s = ori_swap_1_and_2(s, D_mask);
-    return Corners(s);
+    return ori_swap_1_and_2(s, D_mask);
 }
 
 Corners Corners::D2() const
 {
-    auto s = byte_shuffle(state, 0, 1, 2, 3, 7, 6, 5, 4);
-    return Corners(s);
+    return byte_shuffle(state, 0, 1, 2, 3, 7, 6, 5, 4);
 }
 
 Corners Corners::Di() const
 {
     auto s = byte_shuffle(state, 0, 1, 2, 3, 5, 7, 4, 6);
-    s = ori_swap_1_and_2(s, D_mask);
-    return Corners(s);
+    return ori_swap_1_and_2(s, D_mask);
 }
 
 Corners Corners::F() const
 {
     auto s = byte_shuffle(state, 4, 0, 2, 3, 5, 1, 6, 7);
-    s = ori_swap_0_and_1(s, F_mask);
-    return Corners(s);
+    return ori_swap_0_and_1(s, F_mask);
 }
 
 Corners Corners::F2() const
 {
-    auto s = byte_shuffle(state, 5, 4, 2, 3, 1, 0, 6, 7);
-    return Corners(s);
+    return byte_shuffle(state, 5, 4, 2, 3, 1, 0, 6, 7);
 }
 
 Corners Corners::Fi() const
 {
     auto s = byte_shuffle(state, 1, 5, 2, 3, 0, 4, 6, 7);
-    s = ori_swap_0_and_1(s, F_mask);
-    return Corners(s);
+    return ori_swap_0_and_1(s, F_mask);
 }
 
 Corners Corners::B() const
 {
     auto s = byte_shuffle(state, 0, 1, 3, 7, 4, 5, 2, 6);
-    s = ori_swap_0_and_1(s, B_mask);
-    return Corners(s);
+    return ori_swap_0_and_1(s, B_mask);
 }
 
 Corners Corners::B2() const
 {
-    auto s = byte_shuffle(state, 0, 1, 7, 6, 4, 5, 3, 2);
-    return Corners(s);
+    return byte_shuffle(state, 0, 1, 7, 6, 4, 5, 3, 2);
 }
 
 Corners Corners::Bi() const
 {
     auto s = byte_shuffle(state, 0, 1, 6, 2, 4, 5, 7, 3);
-    s = ori_swap_0_and_1(s, B_mask);
-    return Corners(s);
+    return ori_swap_0_and_1(s, B_mask);
 }
 
 Corners Corners::rotated(Rotation r) const
@@ -256,9 +225,3 @@ std::string to_string(Corners corners)
         << c(4) << " - " << c(5) << "/   " << o(4) << " - " << o(5) << "/\n";
     return oss.str();
 }
-
-std::size_t std::hash<Corners>::operator()(Corners c) const
-{
-    return std::hash<uint64_t>{}(c.get_state());
-}
-

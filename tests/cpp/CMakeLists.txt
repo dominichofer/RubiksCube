@@ -5,6 +5,7 @@ add_executable(
     test_corners.cpp
     test_corner_solution.cpp
     test_intrin.cpp
+    test_rotation.cpp
 )
 
 target_link_libraries(
