@@ -1,9 +1,9 @@
 #include "rotation.h"
-#include <vector>
+#include <array>
 
 std::string to_string(Rotation r)
 {
-    return std::vector<std::string>{
+    return std::array{
         "L", "L2", "Li",
         "R", "R2", "Ri",
         "U", "U2", "Ui",

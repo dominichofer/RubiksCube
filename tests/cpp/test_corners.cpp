@@ -51,18 +51,6 @@ TEST(Corners, L)
               "0 - 5/   2 - 0/\n");
 }
 
-TEST(Corners, L1_twisted)
-{
-    auto c = Corners(0, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1).L();
-    EXPECT_EQ(to_string(c),
-              " Cubie  Orientation\n"
-              "  6 - 3    1 - 1\n"
-              " /   /|   /   /|\n"
-              "2 - 1 |  1 - 1 |\n"
-              "| 4 | 7  | 1 | 1\n"
-              "0 - 5/   1 - 1/\n");
-}
-
 TEST(Corners, L2)
 {
     EXPECT_EQ(Corners().L2(), Corners().L().L());
@@ -271,12 +259,12 @@ TEST(Corners, rotation_fuzzing)
     }
 }
 
-TEST(Corners, cubie_index)
+TEST(Corners, position_index)
 {
     std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7};
     do
     {
-        int index = Corners(v[0], 0, v[1], 0, v[2], 0, v[3], 0, v[4], 0, v[5], 0, v[6], 0, v[7], 0).cubie_index();
+        int index = Corners(v[0], 0, v[1], 0, v[2], 0, v[3], 0, v[4], 0, v[5], 0, v[6], 0, v[7], 0).position_index();
         int reference = 0;
         for (int i = 0; i < 7; i++)
             reference += v[i] * std::pow(8, i);

@@ -57,12 +57,13 @@ const uint64_t B_mask = 0xFF'FF'00'00'FF'FF'00'00ULL;
 uint64_t ori_swap_0_and_1(uint64_t state, uint64_t mask)
 {
     // 1 NOT, 1 AND, 1 XOR, 1 SHIFT
-    return ((~state & (upper_ori_bit & mask)) >> 1) ^ state;
+    mask &= upper_ori_bit;
+    return ((~state & mask) >> 1) ^ state;
 }
 
 uint64_t ori_swap_0_and_2(uint64_t state, uint64_t mask)
 {
-    // 1 SUB, 2 ADD, 1 OR
+    // 1 NOT, 1 AND, 1 OR, 1 SUB
     mask &= ori_mask;
     uint64_t x = (upper_ori_bit & mask) - (state & mask);
     return (state & ~mask) | x;
@@ -71,8 +72,9 @@ uint64_t ori_swap_0_and_2(uint64_t state, uint64_t mask)
 uint64_t ori_swap_1_and_2(uint64_t state, uint64_t mask)
 {
     // 3 AND, 2 SHIFT, 2 OR
-    uint64_t x = ((state & upper_ori_bit & mask) >> 1) | ((state & lower_ori_bit & mask) << 1);
-    return (state & ~(mask & ori_mask)) | x;
+    uint64_t l = (upper_ori_bit & mask & state) >> 1;
+    uint64_t r = (lower_ori_bit & mask & state) << 1;
+    return (state & ~(mask & ori_mask)) | l | r;
 }
 
 Corners Corners::L() const
@@ -190,7 +192,7 @@ Corners Corners::rotated(Rotation r) const
     return (this->*rotations[static_cast<int>(r)])();
 }
 
-int Corners::cubie_index() const
+int Corners::position_index() const
 {
     return _pext_u64(state, 0x00'07'07'07'07'07'07'07ULL);
 }

@@ -28,7 +28,7 @@ public:
         std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7};
         do
         {
-            int index = Corners(v[0], 0, v[1], 0, v[2], 0, v[3], 0, v[4], 0, v[5], 0, v[6], 0, v[7], 0).cubie_index();
+            int index = Corners(v[0], 0, v[1], 0, v[2], 0, v[3], 0, v[4], 0, v[5], 0, v[6], 0, v[7], 0).position_index();
             if (table.size() <= index)
                 table.resize(index + 1);
             table[index].resize(std::pow(3, 7), 0xFF);
@@ -84,10 +84,10 @@ public:
             throw std::runtime_error("Invalid table size");
     }
 
-    uint8_t operator[](Corners c) const { return table[c.cubie_index()][c.orientation_index()]; }
+    uint8_t operator[](Corners c) const { return table[c.position_index()][c.orientation_index()]; }
 
 private:
-    uint8_t &operator[](Corners c) { return table[c.cubie_index()][c.orientation_index()]; }
+    uint8_t &operator[](Corners c) { return table[c.position_index()][c.orientation_index()]; }
 };
 
 int solution_distance(Corners c)

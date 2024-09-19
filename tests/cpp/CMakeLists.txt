@@ -2,6 +2,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/cpp)
 
 add_executable(
     RubiksCubeTest
+    test_center_edges.cpp
     test_corners.cpp
     test_corner_solution.cpp
     test_intrin.cpp

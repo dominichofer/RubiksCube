@@ -61,7 +61,7 @@ public:
 
     Corners rotated(Rotation) const;
 
-    int cubie_index() const;
+    int position_index() const;
     int orientation_index() const;
 };
 
